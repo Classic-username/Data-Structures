@@ -1,5 +1,3 @@
-from collections import OrderedDict
-
 import sys
 
 sys.path.append('./doubly_linked_list')
@@ -16,9 +14,10 @@ class LRUCache:
     """
     def __init__(self, limit=10):
         self.limit = limit
+        self.current_nodes = 0
+
         self.dll = DoublyLinkedList()
-        self.storage = OrderedDict()
-        self.holding = len(self.storage)
+        self.storage = {}
 
     """
     Retrieves the value associated with the given key. Also
@@ -28,11 +27,19 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
+
         if key not in self.storage:
             return None
-        else:
-            self.storage.move_to_end(key, last=False)
-            return self.storage[key]
+
+        node = self.dll.head
+        while node is not None:
+            if key == node.value[0]:
+                self.dll.move_to_front(node)
+                break
+
+            node = node.next
+        
+        return self.storage[key]
             
 
 
@@ -47,5 +54,36 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        if self.holding == self.limit:
+        #if key stored, overwrite old value
+        if key in self.storage:
+            #overwrite in dict and dll
+            self.storage[key] = value
+
+            node = self.dll.head
+            while node is not None:
+
+                if key == node.value[0]:
+                    node.value[1] = value
+
+                    self.dll.move_to_front(node)
+
+                    break
+                node = node.next
+
+        else:
+            #handle the case where we are already full
+            if self.current_nodes == self.limit:
+                #delete something
+                node = self.dll.tail
+                old_key = node.value[0]
+                self.dll.remove_from_tail()
+
+                del self.storage[old_key]
+                self.current_nodes -= 1
+
+            #add to cache
             
+            self.storage[key] = value
+            self.dll.add_to_head([key, value])
+
+            self.current_nodes += 1
