@@ -1,4 +1,12 @@
-class LRUCache:
+from collections import OrderedDict
+
+import sys
+
+sys.path.append('./doubly_linked_list')
+
+from doubly_linked_list import DoublyLinkedList
+
+class LRUCache:        
     """
     Our LRUCache class keeps track of the max number of nodes it
     can hold, the current number of nodes it is holding, a doubly-
@@ -7,7 +15,10 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        pass
+        self.limit = limit
+        self.dll = DoublyLinkedList()
+        self.storage = OrderedDict()
+        self.holding = len(self.storage)
 
     """
     Retrieves the value associated with the given key. Also
@@ -17,7 +28,13 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        pass
+        if key not in self.storage:
+            return None
+        else:
+            self.storage.move_to_end(key, last=False)
+            return self.storage[key]
+            
+
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -30,4 +47,5 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        pass
+        if self.holding == self.limit:
+            
