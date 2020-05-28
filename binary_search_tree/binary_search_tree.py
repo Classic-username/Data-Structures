@@ -51,7 +51,13 @@ class BSTNode:
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        fn(self.value)
+        
+        if self.left:
+            self.left.for_each(fn)
+        
+        if self.right:
+            self.right.for_each(fn)
 
     # Part 2 -----------------------
 
@@ -65,10 +71,24 @@ class BSTNode:
     def bft_print(self, node):
         pass
 
+        #make a queue
+        #enqueue the node
+        #as long as the queue is not empty
+        ##dequeue from the front of the queue, this is our current node
+        ##enqueue the kids of the current node on the stack
+
+
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
         pass
+
+        #make a stacc
+        #push the node on the stacc
+        #as long as the stacc is thicc
+        ##pop off the stacc, this is our current node
+        ## put the kids of the current node on the stacc
+        ##check that they are not None, and put them on the stacc
 
     # Stretch Goals -------------------------
     # Note: Research may be required
