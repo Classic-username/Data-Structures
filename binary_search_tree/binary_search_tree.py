@@ -64,39 +64,102 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+
+        if self.left is not None:
+            self.left.in_order_print(self.left)
+        print(node.value)
+        if self.right is not None:
+            self.right.in_order_print(self.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
 
         #make a queue
+        queue = []
+
         #enqueue the node
+        queue.append(node)
+
         #as long as the queue is not empty
-        ##dequeue from the front of the queue, this is our current node
+        while len(queue) > 0:
+            ##dequeue from the front of the queue, this is our current node
+            node = queue.pop(0)
+            print(node.value)
+
+            if node.left is not None:
+                queue.append(node.left)
+            if node.right is not None:
+                queue.append(node.right)
+        
+
+        
+        
+        
+        
         ##enqueue the kids of the current node on the stack
 
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
 
         #make a stacc
+        stack = []
+
         #push the node on the stacc
+        stack.append(node)
         #as long as the stacc is thicc
+        while len(stack) > 0:
         ##pop off the stacc, this is our current node
-        ## put the kids of the current node on the stacc
-        ##check that they are not None, and put them on the stacc
+            node = stack.pop()
+            print(node.value)
+            
+        ##the kids, check that they are not None, and put them on the stacc
+            if node.left is not None:
+                stack.append(node.left)
+            if node.right is not None:
+                stack.append(node.right)
+
 
     # Stretch Goals -------------------------
     # Note: Research may be required
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self, node):
-        pass
+        stack = []
+
+        #push the node on the stacc
+        stack.append(node)
+        #as long as the stacc is thicc
+        while len(stack) != 0:
+        ##pop off the stacc, this is our current node
+            node = stack.pop()
+            print(node.value)
+            
+        ##the kids, check that they are not None, and put them on the stacc
+            print(node.value)
+            if node.left is not None:
+                stack.append(node.left)
+            
+            if node.right is not None:
+                stack.append(node.right)
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
-        pass
+        stack = []
+
+        #push the node on the stacc
+        stack.append(node)
+        #as long as the stacc is thicc
+        while len(stack) != 0:
+        ##pop off the stacc, this is our current node
+            node = stack.pop()
+
+            
+        ##the kids, check that they are not None, and put them on the stacc
+            if node.left is not None:
+                stack.append(node.left)
+            if node.right is not None:
+                stack.append(node.right)
+            return(node.value)
