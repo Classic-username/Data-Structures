@@ -1,0 +1,88 @@
+
+
+#file I/O - for another day
+# add to the back of a text buffer
+# add to the front of a text buffer
+# delete to the back of a text buffer
+# delete to the front of a text buffer
+
+# Join text buffers together
+
+# add to the middle
+
+#array vs DLL
+#array: add to back: O(1)
+#array: add to front: O(n)
+
+#array: delete from back: O(1)
+#array: delete from front: O(n)
+
+#array: join text buffers together: O(n)
+
+#DLL: Add to back: O(1)
+#DLL: Add to front: O(1)
+#DLL: delete from back: O(1)
+#DLL: delete from front: O(1)
+#DLL: join text buffers together: O(1)
+
+# __str__, to print out what's inside
+# array, O(n)
+# DLL, O(n)
+
+
+import sys
+
+sys.path.append('./doubly_linked_list')
+
+from doubly_linked_list import DoublyLinkedList
+
+class TextBuffer:
+    def __init__(self):
+        self.storage = DoublyLinkedList()
+
+
+    def __str__(self):
+        string_to_return = ''
+
+        node = self.storage.add_to_head
+        while node is not None:
+            string_to_return += node.value
+            node = node.next
+
+        return string_to_return
+
+    def join(self, other_buffer):
+        
+        self.storage.tail.next = other_buffer.storage.add_to_head
+        other_buffer.storage.head.prev = self.storage.tail
+
+        self.storage.tail = other_buffer.storage.tail
+
+    def append(self, string_to_add):
+        for char in string_to_add:
+            self.storage.add_to_tail()
+
+    def prepend(self, string_to_add):
+        for char in string_to_add:
+            self.storage.add_to_head()
+
+    def delete_from_front(self, number_of_chars_to_remove):
+        for _ in range(number_of_chars_to_remove):
+            self.storage.remove_from_head()
+
+    def delete_from_back(self, number_of_chars_to_remove):
+        for _ in range(number_of_chars_to_remove):
+            self.storage.remove_from_tail()
+
+    def find_text(self, text_to_find):
+        pass
+
+text = TextBuffer()
+text.append('hello')
+
+other_buffer = TextBuffer()
+other_buffer.append(' how are you')
+
+text.join(other_buffer)
+"Hi how are you Fine thank you"
+
